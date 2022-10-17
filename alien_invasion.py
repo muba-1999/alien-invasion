@@ -1,6 +1,7 @@
 import sys
 import pygame
 from settings import Settings
+from ship import Ship
 
 
 class AlienInvasion:
@@ -12,26 +13,29 @@ class AlienInvasion:
 		pygame.init()
 		self.settings = Settings()
 
-		self.screen = pygame.display.set_mode(self.settings.screen_width, self.settings.screen_height)
+		self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
 		pygame.display.set_caption("Alien Invasion")
 
-		def run_game(self):
-			"""creating game loop"""
+		self.ship = Ship(self)
 
-			while True:
+	def run_game(self):
+		"""creating game loop"""
 
-				#watching for keyboard and mouse events
-				for event in pygame.event.get():
-					if event.type == pygame.QUIT:
-						sys.exit()
+		while True:
 
-				self.screen.fill(self.settings.bg_color)
+			#watching for keyboard and mouse events
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					sys.exit()
 
-				#making the drawn screen visible
-				pygame.display.flip()
+			self.screen.fill(self.settings.bg_color)
+			self.ship.blitme()
+
+			#making the drawn screen visible
+			pygame.display.flip()
 
 
-if __name__ == 'main':
+if __name__ == '__main__':
 	#making game instance and running game
 
 	ai = AlienInvasion()
