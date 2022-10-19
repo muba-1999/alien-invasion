@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from bullet import Bullet 
+from alien import Alien
 
 
 class AlienInvasion:
@@ -22,6 +23,7 @@ class AlienInvasion:
 
 		self.ship = Ship(self)
 		self.bullets = pygame.sprite.Group()
+		self.aliens = pygame.sprite.Group()
 
 
 	def run_game(self):
@@ -33,7 +35,15 @@ class AlienInvasion:
 			self.ship.update()
 			self.bullets.update()
 			self._update_bullets()
+			self._create_fleet()
 			self._update_screen()
+
+
+	def _create_fleet(self):
+		"""creates an alien fleet"""
+		alien = Alien(self)
+		self.aliens.add(alien)
+
 
 
 	def _check_event(self):
@@ -89,6 +99,8 @@ class AlienInvasion:
 
 		for bullet in self.bullets.sprites():
 			bullet.draw_bullet( )
+
+		self.aliens.draw(self.screen)
 
 		#making the drawn screen visible
 		pygame.display.flip()
