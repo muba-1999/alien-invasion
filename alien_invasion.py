@@ -16,6 +16,7 @@ class AlienInvasion:
 		self.settings = Settings()
 
 		self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+		#self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
 		self.settings.screen_width = self.screen.get_rect().width
 		self.settings.screen_height = self.screen.get_rect().height
 		
@@ -41,10 +42,23 @@ class AlienInvasion:
 
 	def _create_fleet(self):
 		"""creates an alien fleet"""
+		#spacing between aliens is one alien width
 		alien = Alien(self)
+		alien_width = alien.rect.width
+		availabe_space_x = self.settings.screen_width - (2 * alien_width)
+		number_aliens_x = availabe_space_x // (2 * alien_width)
+
+		#creating the first row of aliens
+		for alien_number in range(number_aliens_x):
+			self._create_alien()
+
+
+	def _create_alien(self):
+		#creates an alien
+		alien = Alien(self)
+		alien.x = alien_width + 2 * alien_width * alien_number
+		alien.rect.x = alien.x
 		self.aliens.add(alien)
-
-
 
 	def _check_event(self):
 		#watching for keyboard and mouse events
